@@ -1,0 +1,9 @@
+<div class="box">
+	<%= form_tag("/record", method: "post") do %>
+	  <%= label_tag(:title, "Title:") %>
+	  <%= text_field_tag(:title) %><br/>
+	  <%= label_tag(:desc, "Description:") %>
+	  <%= text_field_tag(:desc) %><br/>
+	  <%= submit_tag("Create") %>
+	<% end %>
+</div>

@@ -1,0 +1,9 @@
+<div class='box'>
+	<a href='/record/new'><button style="width: 100%">new</button></a>
+</div>
+<% @records.each do |record| %>
+	<div class='box'>
+		<h3><%= record.title %></h3>
+		<p><%= record.description %></p>
+	</div>
+<% end %>

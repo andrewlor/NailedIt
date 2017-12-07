@@ -1,0 +1,27 @@
+<div class="box">
+
+	<%= form_for(:user, url: {controller: 'user', action: 'create'}) do |f| %>
+	  <p> Username:</br> <%= f.text_field :username%> </p>
+    <p> Password:</br> <%= f.password_field :password%></p>
+    <%= f.submit :Signup %>
+	<% end %>
+
+	<% if @user.errors.any? %>
+    <ul class="Signup_Errors">
+    <% for message_error in @user.errors.full_messages %>
+      <li>* <%= message_error %></li>
+    <% end %>
+    </ul>
+  <% end %>
+
+</div>
+
+<div class="box">
+
+  <%= form_tag('/login', method: 'post') do %>
+    <p>Username:<br/> <%= text_field_tag(:username) %></p>
+    <p> Password:<br/> <%= password_field_tag(:password) %></p>
+    <%= submit_tag("Login") %>
+  <% end %>
+
+</div>
