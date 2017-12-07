@@ -1,5 +1,8 @@
 <div class='box' >
 	<h3><%= @record.title %></h3>
+	<% if !@record.init_attempt %>
+		<h4>You have not attempted this record yet. Only you can see it. You must make an attempt below before it is public.</h4>
+	<% end %>
 	<p><%= User.find(@record.user_id).username %></p>
 	<p><%= @record.description %></p>
 </div>
