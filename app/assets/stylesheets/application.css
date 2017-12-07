@@ -46,3 +46,7 @@ h1, h2, h3 {
 	left: 25vw;
 	border: 2px grey solid;
 }
+
+.space {
+	height: 50px;
+}

@@ -1,5 +1,6 @@
 class User < ApplicationRecord
 	has_many :records
+	has_many :attempts
 
 	before_save :encrypt_password
 	after_save :clear_password

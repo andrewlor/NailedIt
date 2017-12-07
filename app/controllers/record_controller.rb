@@ -12,4 +12,8 @@ class RecordController < ApplicationController
 		Record.create!(title: params[:title], description: params[:desc], user_id: current_user.id)
 		redirect_to '/record'
 	end
+
+	def show
+		@record = Record.find(params[:id])
+	end
 end

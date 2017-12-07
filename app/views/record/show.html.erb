@@ -1,0 +1,26 @@
+<div class='box' >
+	<h3><%= @record.title %></h3>
+	<p><%= User.find(@record.user_id).username %></p>
+	<p><%= @record.description %></p>
+</div>
+
+<div class='box'>
+	<a href='/attempt/new?record_id=<%= @record.id %>'><button style='width: 100%'>Attempt this record!</button></a>
+</div>
+
+<div class='space'></div>
+
+<% @record.attempts.each do |attempt| %>
+	<div class='box' >
+		<h3><%= User.find(attempt.user_id).username %> attempted at <%= attempt.created_at %></h3>
+		<% if attempt.success.present? %>
+			<% if attempt.success %>
+				<p>and succeeded!</p>
+			<% else %>
+			  <p>and failed</p>
+			<% end %>
+		<% else %>
+			<p>status pending</p>
+		<% end %>
+	</div>
+<% end %>

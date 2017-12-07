@@ -1,0 +1,7 @@
+<div class='box'>
+	<h1>Attempting: <%= @record.title %></h1>
+	<%= form_tag('/attempt', :method => 'post') do %>
+		<input type='hidden' name='record_id' value='<%= @record.id %>'/>
+		<input type='submit'/>
+	<% end %>
+</div>
