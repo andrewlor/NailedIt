@@ -1,0 +1,121 @@
+$header-font: 'Bungee', cursive;
+$text-font: 'Open Sans', sans-serif;
+$primary-color: #ff7e00;
+$back-color: #eaeaea;
+
+/* Positional Classes to inherit from */
+
+.vertical-center {
+	position: absolute;
+	top: 50%;
+	transform: translate(0, -50%);
+}
+
+.horizontal-center {
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%, 0);
+}
+
+/* General HTML element override */
+
+body {
+	background-color: $back-color;
+}
+
+h1, h2, h3, h4 {
+ 	font-family: arial; /* Fall back font */
+	font-weight: bold;
+	font-family: $header-font;
+	color: #ff7e00;
+}
+
+p {
+	font-family: arial; /* Fall back font */
+	font-family: $text-font;
+	color: #ff7e00;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:link, a:visited {
+  color: #ff7e00;
+}
+
+button {
+	border-radius: 0;
+	height: 30px;
+	font-family: $header-font;
+	color: white;
+	background-color: orange;
+	border: none;
+	font-size: 1em;
+}
+
+input[type=submit] {
+	@extend button;
+}
+
+input:focus {
+	outline: none;
+}
+
+input[type=text] {
+	border: none;
+	border-radius: 0;
+	margin: 10px;
+	width: calc(100% - 10px);
+	font-family: $text-font;
+	font-size: 1em;
+}
+
+input[type=password] {
+	@extend input[type=text];
+}
+
+textarea {
+	margin: 10px;
+	font-family: $text-font;
+	border: none;
+	width: calc(100% - 10px);
+	height: 200px;
+	font-size: 0.75em;
+	resize: none;
+}
+
+textarea:focus {
+	outline: none;
+}
+
+/* General Classes */
+
+.box {
+	@extend .horizontal-center;
+	position: relative;
+	width: 50vw;
+	padding: 10px;
+	background-color: white;
+}
+
+.space {
+	height: 50px;
+}
+
+/* Specific element ids */
+
+#topbar {
+	position: absolute;
+	width: 100%;
+	height: 100px;
+	left: 0;
+	top: 0;
+	background-color: white;
+}
+
+#logo {
+	@extend .vertical-center;
+	margin: 0;
+	left: 1vw;
+}

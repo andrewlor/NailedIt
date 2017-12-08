@@ -16,6 +16,7 @@ class ApplicationController < ActionController::Base
 
   def login_action
   	@user = User.find_by(username: params[:username])
+    redirect_to '/signup' && return unless @user
   	if BCrypt::Password.new(@user.encrypted_password) == params[:password]
   		session[:user_id] = @user.id
   		redirect_to '/'

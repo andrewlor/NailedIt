@@ -1,12 +1,15 @@
 <div class='box'>
-	<a href='/record/new'><button style="width: 100%">new</button></a>
+	<a href='/record/new'><button style="width: 100%">Create a new Record!</button></a>
 </div>
+
+<div class='space'></div>
+
 <% @records.each do |record| %>
-	<a href='/record/<%= record.id %>'>
-		<div class='box' >
-			<h3><%= record.title %></h3>
-			<p><%= User.find(record.user_id).username %></p>
+	<div class='box' >
+		<a href='/record/<%= record.id %>'>
+			<h2><%= record.title %></h2>
+			<h3>By <%= User.find(record.user_id).username %></h3>
 			<p><%= record.description %></p>
-		</div>
-	</a>
+		</a>
+	</div>
 <% end %>

@@ -1,9 +1,9 @@
 <div class='box' >
-	<h3><%= @record.title %></h3>
+	<h2><%= @record.title %></h2>
 	<% if !@record.init_attempt %>
 		<h4>You have not attempted this record yet. Only you can see it. You must make an attempt below before it is public.</h4>
 	<% end %>
-	<p><%= User.find(@record.user_id).username %></p>
+	<h3>By <%= User.find(@record.user_id).username %></h3>
 	<p><%= @record.description %></p>
 </div>
 
@@ -15,7 +15,7 @@
 
 <% @record.attempts.each do |attempt| %>
 	<div class='box' >
-		<h3><%= User.find(attempt.user_id).username %> attempted at <%= attempt.created_at %></h3>
+		<h2><%= User.find(attempt.user_id).username %> attempted at <%= attempt.created_at %></h2>
 		<% if attempt.success.present? %>
 			<% if attempt.success %>
 				<p>and succeeded!</p>

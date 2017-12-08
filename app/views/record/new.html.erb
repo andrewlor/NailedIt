@@ -1,9 +1,7 @@
 <div class="box">
 	<%= form_tag("/record", method: "post") do %>
-	  <%= label_tag(:title, "Title:") %>
-	  <%= text_field_tag(:title) %><br/>
-	  <%= label_tag(:desc, "Description:") %>
-	  <%= text_field_tag(:desc) %><br/>
+	  <%= text_field_tag(:title, '', placeholder: 'Enter a title for your record') %><br/>
+	  <%= text_area_tag(:desc, '',placeholder: 'Ender a full description of your record, including any nessary details and rules.') %><br/>
 	  <%= submit_tag("Create") %>
 	<% end %>
 </div>
