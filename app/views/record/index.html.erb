@@ -9,7 +9,6 @@
 		<a href='/record/<%= record.id %>'>
 			<h2><%= record.title %></h2>
 			<h3>By <%= User.find(record.user_id).username %></h3>
-			<p><%= record.description %></p>
 		</a>
 	</div>
 <% end %>

@@ -1,5 +1,5 @@
 $header-font: 'Bungee', cursive;
-$text-font: 'Open Sans', sans-serif;
+$text-font: 'Montserrat', sans-serif;
 $primary-color: #ff7e00;
 $back-color: #eaeaea;
 
@@ -56,6 +56,7 @@ button {
 
 input[type=submit] {
 	@extend button;
+	margin: 10px;
 }
 
 input:focus {

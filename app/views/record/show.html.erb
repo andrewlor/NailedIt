@@ -4,7 +4,7 @@
 		<h4>You have not attempted this record yet. Only you can see it. You must make an attempt below before it is public.</h4>
 	<% end %>
 	<h3>By <%= User.find(@record.user_id).username %></h3>
-	<p><%= @record.description %></p>
+	<p><%= simple_format(@record.description) %></p>
 </div>
 
 <div class='box'>

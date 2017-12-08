@@ -4,7 +4,7 @@
     <title>NailedIt</title>
     <%= csrf_meta_tags %>
 
-    <link href="https://fonts.googleapis.com/css?family=Bungee|Open+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Bungee|Montserrat" rel="stylesheet">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
@@ -16,7 +16,7 @@
         <%= submit_tag("logout") %>
       <% end %>
       <% if @current_user %>
-        <h4 style='right: 6vw; margin: 0;' class='vertical-center'>Hi, <%= @current_user.username %></h4>
+        <h4 style='right: 150px; margin: 0;' class='vertical-center'>Hi, <%= @current_user.username %></h4>
       <% end %>
   	</div>
   	<div style='height: 150px'></div>
