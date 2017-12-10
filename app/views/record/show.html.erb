@@ -1,10 +1,10 @@
 <div class='box' >
 	<h2><%= @record.title %></h2>
-	<% if !@record.init_attempt %>
-		<h4>You have not attempted this record yet. Only you can see it. You must make an attempt below before it is public.</h4>
-	<% end %>
 	<h3>By <%= User.find(@record.user_id).username %></h3>
 	<p><%= simple_format(@record.description) %></p>
+	<% if !@record.init_attempt %>
+		<p class='warning'>You have not attempted this record yet. Only you can see it. You must make an attempt below before it is public.</p>
+	<% end %>
 </div>
 
 <div class='box'>
@@ -24,6 +24,9 @@
 			<% end %>
 		<% else %>
 			<p>status pending</p>
+		<% end %>
+		<% if @current_holder_id == attempt.id %>
+			<p>Current Holder</p>
 		<% end %>
 	</div>
 <% end %>

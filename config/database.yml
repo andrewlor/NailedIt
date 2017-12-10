@@ -18,7 +18,7 @@ development:
   encoding: utf8
   database: nailed_it_dev
   username: root
-  password: 
+  password: password
   host: 127.0.0.1
   port: 3306
 

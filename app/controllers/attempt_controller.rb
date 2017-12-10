@@ -3,6 +3,19 @@ class AttemptController < ApplicationController
 
 	def new
 		@record = Record.find(params[:record_id])
+
+		current_holder = @record.current_holder
+
+		if current_holder
+			hasPendingAttempt = false
+			@record.attempts.where(user_id: current_user.id).each do |attempt|
+				if attempt.success.blank?
+					hasPendingAttempt = true
+				end
+			end
+			if hasPendingAttempt || User.find(current_holder.user_id).id == current_user.id; redirect_back fallback_location: root_path end
+		end
+
 		redirect_back fallback_location: root_path unless (@record.init_attempt || @record.user_id == current_user.id)
 	end
 

@@ -15,6 +15,8 @@ class RecordController < ApplicationController
 
 	def show
 		@record = Record.find(params[:id])
+		current_holder = @record.current_holder
+		@current_holder_id = current_holder ? current_holder.id : -1
 		redirect_back fallback_location: root_path unless (@record.init_attempt || @record.user_id == current_user.id)
 	end
 end
