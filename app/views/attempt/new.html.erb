@@ -2,7 +2,72 @@
 	<h1>Attempting: <%= @record.title %></h1>
 	<%= form_tag('/attempt', :method => 'post') do %>
 		<input type='hidden' name='record_id' value='<%= @record.id %>'/>
-    <div id="camera" style='width: 100%'></div>
+
+    <video muted autoplay id='video'></video>
+    <input type='button' value='Record' id='record'>
+		<input type='button' value='Stop' id='stop'>
+		<input type='button' value='Reset' id='reset' style='visibility: hidden'>
+		<br/>
+
 		<input type='submit'/>
 	<% end %>
+	<div class='clip'></div>
 </div>
+
+<script>
+	var errorCallback = function(e) {
+    console.log('Rejected!', e);
+  };
+
+	let video = document.getElementById('video');
+  let record = document.getElementById('record');
+  let stop = document.getElementById('stop');
+  let reset = document.getElementById('reset');
+
+  let chunks = [];
+
+	navigator.getUserMedia  = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+
+	if (navigator.getUserMedia) {
+	  navigator.getUserMedia({audio: true, video: true}, function(stream) {
+	    video.src = window.URL.createObjectURL(stream);
+
+	    var mediaRecorder = new MediaRecorder(stream);
+
+	    // visualize(stream);
+
+	    record.onclick = function() {
+	      mediaRecorder.start();
+	      record.style.background = "red";
+	    }
+
+	    stop.onclick = function() {
+	      mediaRecorder.stop();
+	      record.style.background = "";
+	    }
+
+	    mediaRecorder.onstop = function(e) {
+
+	      var blob = new Blob(chunks, { 'type' : 'video/webm; codecs=opus' });
+	      chunks = [];
+
+	      video.src = URL.createObjectURL(blob);
+	      video.controls = true;
+	      reset.style.visibility = 'visible';
+
+	      reset.onclick = function () {
+	      	video.src = window.URL.createObjectURL(stream);
+	      	reset.style.visibility = 'hidden';
+	      	video.controls = false;
+	      }
+	    }
+
+	    mediaRecorder.ondataavailable = function(e) {
+	      chunks.push(e.data);
+	    }
+
+	  }, errorCallback);
+	} else {
+
+	}
+</script>

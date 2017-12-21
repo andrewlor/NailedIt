@@ -59,6 +59,11 @@ input[type=submit] {
 	margin: 10px;
 }
 
+input[type=button] {
+	@extend button;
+	margin: 10px;
+}
+
 input:focus {
 	outline: none;
 }
@@ -88,6 +93,10 @@ textarea {
 
 textarea:focus {
 	outline: none;
+}
+
+video {
+	width: 100%;
 }
 
 /* General Classes */
