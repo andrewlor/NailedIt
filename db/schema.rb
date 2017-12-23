@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171207211439) do
+ActiveRecord::Schema.define(version: 20171222205100) do
 
   create_table "attempts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 20171207211439) do
     t.boolean  "success"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "video"
     t.index ["record_id"], name: "index_attempts_on_record_id", using: :btree
     t.index ["user_id"], name: "index_attempts_on_user_id", using: :btree
   end

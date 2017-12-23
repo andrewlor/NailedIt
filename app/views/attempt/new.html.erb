@@ -1,16 +1,17 @@
 <div class='box'>
 	<h1>Attempting: <%= @record.title %></h1>
-	<%= form_tag('/attempt', :method => 'post') do %>
-		<input type='hidden' name='record_id' value='<%= @record.id %>'/>
-
-    <video muted autoplay id='video'></video>
-    <input type='button' value='Record' id='record'>
+	<%= form_tag('/attempt', method: 'post') do %>
+		<input type='hidden' name='record_id' value='<%= @record.id %>'>
+	  <video muted autoplay id='video'></video>
+	  <input type='hidden' name='video_string' id='videoString'>
+	  <input type='button' value='Record' id='record'>
 		<input type='button' value='Stop' id='stop'>
 		<input type='button' value='Reset' id='reset' style='visibility: hidden'>
 		<br/>
 
-		<input type='submit'/>
+		<input type='submit' id='submit'/>
 	<% end %>
+
 	<div class='clip'></div>
 </div>
 
@@ -23,6 +24,9 @@
   let record = document.getElementById('record');
   let stop = document.getElementById('stop');
   let reset = document.getElementById('reset');
+  let videoString = document.getElementById('videoString');
+  let submit = document.getElementById('submit');
+  var blob;
 
   let chunks = [];
 
@@ -48,12 +52,21 @@
 
 	    mediaRecorder.onstop = function(e) {
 
-	      var blob = new Blob(chunks, { 'type' : 'video/webm; codecs=opus' });
+	      blob = new Blob(chunks, { 'type' : 'video/webm; codecs=opus' });
 	      chunks = [];
 
 	      video.src = URL.createObjectURL(blob);
 	      video.controls = true;
 	      reset.style.visibility = 'visible';
+
+	      var reader = new FileReader();
+
+	      reader.onload = function(event){
+	      	console.log(event.target.result.length)
+	      	videoString.value = event.target.result;
+				};
+
+	      reader.readAsDataURL(blob);
 
 	      reset.onclick = function () {
 	      	video.src = window.URL.createObjectURL(stream);

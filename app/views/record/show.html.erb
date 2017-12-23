@@ -28,5 +28,7 @@
 		<% if @current_holder_id == attempt.id %>
 			<p>Current Holder</p>
 		<% end %>
+		<% file = File.open(attempt.video, 'r') %>
+		<video controls src='<%= file.read %>'>
 	</div>
 <% end %>

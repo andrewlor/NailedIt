@@ -22,7 +22,16 @@ class AttemptController < ApplicationController
 	def create
 		record = Record.find(params[:record_id])
 		redirect_back fallback_location: root_path unless (record.init_attempt || record.user_id == current_user.id)
+
 		attempt = Attempt.create(user_id: current_user.id, record_id: params[:record_id])
+
+		location = Rails.root.join('tmp', 'videos', 'attempt' + attempt.id.to_s + '.webm')
+
+		file = File.new(location, 'w')
+		file.puts(params[:video_string])
+		file.close
+
+		attempt.video = location
 		
 		if !record.init_attempt
 			record.init_attempt = true
@@ -32,6 +41,6 @@ class AttemptController < ApplicationController
 
 		attempt.save!
 
-		redirect_to '/record/' + params[:record_id]
+		redirect_to '/record/' + record.id.to_s
 	end
 end
