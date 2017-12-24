@@ -45,9 +45,12 @@ a:link, a:visited {
 }
 
 button {
+	-webkit-appearance: none;
+	 -moz-appearance: none;
+	 appearance: none;  
 	border-radius: 0;
-	height: 30px;
 	font-family: $header-font;
+	padding: 5px;
 	color: white;
 	background-color: orange;
 	border: none;
@@ -131,5 +134,57 @@ video {
 #logo {
 	@extend .vertical-center;
 	margin: 0;
-	left: 1vw;
+	left: 25px;
+	background-color: white;
+	z-index: 1;
+}
+
+#current_user {
+	@extend .vertical-center;
+	right: 150px;
+	margin: 0;
+}
+
+#logout_button {
+	@extend .vertical-center;
+	right: 25px;
+}
+
+/* Mobile Optimize */
+
+@media screen and (max-width: 1000px) {
+	p { font-size: 48px; } 
+	h1 { font-size: 6em; }
+	h2 { font-size: 3em; }
+	h3 { font-size: 2.34em; }
+	h4 { font-size: 2.24em; }
+	input[type='text'], input[type='password'] { 
+		font-size: 48px;
+		left: 0;
+	}
+	textarea {
+		font-size: 32px;
+	}
+	input[type='submit'] {
+		padding: 10px;
+	}
+	button {
+		font-size: 48px;
+	}
+
+  .box {
+  	width: 100vw;
+  }
+
+  #topbar {
+  	height: 150px;
+  }
+
+  #current_user {
+  	visibility: hidden;
+  }
+
+  .space {
+  	height: 75px;
+  }
 }

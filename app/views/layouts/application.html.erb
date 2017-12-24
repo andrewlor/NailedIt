@@ -11,12 +11,18 @@
 
   <body>
   	<div id='topbar'>
-  		<h1 id='logo'><a href='/'>nailed it.</a></h1>
-      <%= form_tag('/logout' , method: 'post', style: 'right: 1vw', class: 'vertical-center') do%>
-        <%= submit_tag("logout") %>
-      <% end %>
+  		<div>
+        <h1 id='logo'><a href='/'>nailed it.</a></h1>
+      </div>
+
+
       <% if @current_user %>
-        <h4 style='right: 150px; margin: 0;' class='vertical-center'>Hi, <%= @current_user.username %></h4>
+        <h4 id='current_user'>Hi, <%= @current_user.username %></h4>
+      <% end %>
+      <% if !current_page?('/signup')%>
+        <%= form_tag('/logout' , method: 'post', id: 'logout_button') do%>
+          <%= submit_tag("logout") %>
+        <% end %>
       <% end %>
   	</div>
   	<div class='space'></div>

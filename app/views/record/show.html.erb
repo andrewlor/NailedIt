@@ -8,7 +8,7 @@
 </div>
 
 <div class='box'>
-	<a href='/attempt/new?record_id=<%= @record.id %>'><button style='width: 100%'>Attempt this record!</button></a>
+	<a href='/attempt/new?record_id=<%= @record.id %>' style='width: 100%'><button style='width: 100%'>Attempt this record!</button></a>
 </div>
 
 <div class='space'></div>
@@ -31,4 +31,5 @@
 		<% file = File.open(attempt.video, 'r') %>
 		<video controls src='<%= file.read %>'>
 	</div>
+	<div class='space'></div>
 <% end %>
