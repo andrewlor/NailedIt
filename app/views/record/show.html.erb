@@ -28,7 +28,21 @@
 		<% if @current_holder_id == attempt.id %>
 			<p>Current Holder</p>
 		<% end %>
-		<video controls src='<%= VideoUploader.read_video(attempt.id) %>'>
+		<button id='<%= attempt.id %>' onclick='showVideo(this.id)'>Show Video</button>
+		<div id='videoContainer<%= attempt.id %>'></div>
 	</div>
 	<div class='space'></div>
 <% end %>
+
+<script type="text/javascript">
+	function showVideo(id) {
+		let videoContainer = document.getElementById('videoContainer' + id);
+		$.ajax({
+      type: "GET", 
+      url: '/video/' + id,
+      success: function(data) {
+      	videoContainer.innerHTML = '<video src=\'' + data.video + '\'controls>';
+      }
+    });
+	}
+</script>

@@ -1,5 +1,5 @@
 class AttemptController < ApplicationController
-	before_action :current_user
+	before_action :current_user, except: :get_video
 
 	def new
 		@record = Record.find(params[:record_id])
@@ -36,5 +36,9 @@ class AttemptController < ApplicationController
 		attempt.save!
 
 		redirect_to '/record/' + record.id.to_s
+	end
+
+	def get_video
+		render json: {video: VideoUploader.read_video(params[:id])}
 	end
 end

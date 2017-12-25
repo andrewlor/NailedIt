@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get '/signup', to: 'user#new'
   post '/login', to: 'application#login_action'
   post '/logout', to: 'application#logout'
+  get '/video/:id', to: 'attempt#get_video'
 
   resources :attempt
   resources :record
