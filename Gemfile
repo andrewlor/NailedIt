@@ -33,7 +33,10 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 
 # Added by me
+gem 'dotenv-rails'
 gem 'bcrypt', '~> 3.1.7'
+gem 'aws-sdk'
+
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

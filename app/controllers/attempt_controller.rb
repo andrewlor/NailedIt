@@ -25,13 +25,7 @@ class AttemptController < ApplicationController
 
 		attempt = Attempt.create(user_id: current_user.id, record_id: params[:record_id])
 
-		location = Rails.root.join('tmp', 'videos', 'attempt' + attempt.id.to_s + '.webm')
-
-		file = File.new(location, 'w')
-		file.puts(params[:video_string])
-		file.close
-
-		attempt.video = location
+		attempt.video = VideoUploader.store_video(attempt.id, params[:video_string])
 		
 		if !record.init_attempt
 			record.init_attempt = true
