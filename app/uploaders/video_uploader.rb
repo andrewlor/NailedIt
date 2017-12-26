@@ -9,7 +9,7 @@ class VideoUploader
 		file.puts(file_contents)
 		file.close
 
-		if Rails.env.production? # prod
+		if Rails.env.production?
 			# upload to s3
 			s3 = Aws::S3::Resource.new(region: ENV['AWS_REGION'])
 			obj = s3.bucket(ENV['S3_BUCKET_NAME']).object('videos/' + file_name)

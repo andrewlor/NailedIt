@@ -57,6 +57,10 @@ button {
 	font-size: 1em;
 }
 
+button:focus {
+	outline: none;
+}
+
 input[type=submit] {
 	@extend button;
 	margin: 10px;

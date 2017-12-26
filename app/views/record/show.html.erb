@@ -28,21 +28,34 @@
 		<% if @current_holder_id == attempt.id %>
 			<p>Current Holder</p>
 		<% end %>
-		<button id='<%= attempt.id %>' onclick='showVideo(this.id)'>Show Video</button>
-		<div id='videoContainer<%= attempt.id %>'></div>
+		<button id='<%= attempt.id %>' onclick='toggleVideo(this.id)'>Show Video</button>
+
+		<div id='videoContainer<%= attempt.id %>' style='display: none'></div>
 	</div>
 	<div class='space'></div>
 <% end %>
 
 <script type="text/javascript">
-	function showVideo(id) {
+	function toggleVideo(id) {
 		let videoContainer = document.getElementById('videoContainer' + id);
-		$.ajax({
-      type: "GET", 
-      url: '/video/' + id,
-      success: function(data) {
-      	videoContainer.innerHTML = '<video src=\'' + data.video + '\'controls>';
-      }
-    });
+		let button = document.getElementById(id);
+
+		if (videoContainer.style.display == 'none') {
+			if (!videoContainer.innerHTML) {
+				$.ajax({
+		      type: "GET", 
+		      url: '/video/' + id,
+		      success: function(data) {
+		      	videoContainer.innerHTML = '<video src=\'' + data.video + '\'controls>';
+		      }
+		    });
+			}
+			videoContainer.style.display = 'block';
+			button.innerHTML = 'Hide Video';
+		} else {
+			videoContainer.style.display = 'none';
+			button.innerHTML = 'Show Video';
+		}
+
 	}
 </script>
