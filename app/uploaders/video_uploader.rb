@@ -1,10 +1,13 @@
 class VideoUploader
-
 	# side effects: uploads video file to s3 or stores in tmp/videos
 	# returns s3 object key or location of video
 	def self.store_video(attempt_id, file_contents)
 		file_name = 'attempt' + attempt_id.to_s + '.webm'
-		temp_location = Rails.root.join('tmp', 'videos', file_name)
+		dir_location = Rails.root.join('tmp', 'videos')
+		temp_location = dir_location + file_name
+		if !File.directory?(dir_location)
+			FileUtils.mkdir(dir_location)
+		end
 		file = File.new(temp_location, 'w')
 		file.puts(file_contents)
 		file.close
