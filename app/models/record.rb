@@ -3,6 +3,7 @@ class Record < ApplicationRecord
 	has_many :attempts
 
 	validates :user_id, :presence => true
+	validates :title, :presence => true
 
 	def current_holder # returns the most recent successful attempt
 		self.attempts.where(success: true).order('created_at').last

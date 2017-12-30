@@ -124,6 +124,11 @@ video {
 	color: red;
 }
 
+.error {
+	@extend .box;
+	opacity: 0.5;
+}
+
 /* Specific element ids */
 
 #topbar {

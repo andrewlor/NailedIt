@@ -9,7 +9,12 @@ class RecordController < ApplicationController
 	end
 
 	def create
-		record = Record.create!(title: params[:title], description: params[:desc], user_id: current_user.id)
+		record = Record.create(title: params[:title], description: params[:desc], user_id: current_user.id)
+		if record.errors.any?
+			flash[:errors] = record.errors.full_messages
+			redirect_to '/record/new'
+			return
+		end
 		redirect_to '/record/' + record.id.to_s
 	end
 

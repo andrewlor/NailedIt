@@ -1,3 +1,9 @@
+<% if flash[:errors] %>
+	<% flash[:errors].each do |error| %>
+  	<div class='error'><p class='warning'><%= error %></p></div>
+  <% end %>
+<% end %>
+
 <div class='box'>
 	<h1>Attempting: <%= @record.title %></h1>
 	<%= form_tag('/attempt', method: 'post') do %>
@@ -69,6 +75,7 @@
 	      reader.readAsDataURL(blob);
 
 	      reset.onclick = function () {
+	      	videoString.value = '';
 	      	video.src = window.URL.createObjectURL(stream);
 	      	reset.style.visibility = 'hidden';
 	      	video.controls = false;

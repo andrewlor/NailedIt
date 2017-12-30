@@ -15,13 +15,22 @@ class ApplicationController < ActionController::Base
   end
 
   def login_action
-  	@user = User.find_by(username: params[:username])
-    redirect_to '/signup' && return unless @user
-  	if BCrypt::Password.new(@user.encrypted_password) == params[:password]
-  		session[:user_id] = @user.id
+  	user = User.find_by(username: params[:username])
+    if !user
+      login_error && return
+    end
+  	if BCrypt::Password.new(user.encrypted_password) == params[:password]
+  		session[:user_id] = user.id
   		redirect_to '/'
   	else
-  		redirect_to '/signup' # change to render so we can see validation errors in view
+  		login_error && return
   	end
+  end
+
+  private
+
+  def login_error
+    flash[:errors] = ['Invalid Username/Password']
+    redirect_to '/signup'
   end
 end

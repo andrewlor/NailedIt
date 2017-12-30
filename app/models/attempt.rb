@@ -4,4 +4,5 @@ class Attempt < ApplicationRecord
 
 	validates :user_id, :presence => true
 	validates :record_id, :presence => true
+	validates :video, :presence => true
 end

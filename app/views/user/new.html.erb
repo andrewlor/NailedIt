@@ -1,3 +1,9 @@
+<% if flash[:errors] %>
+  <% flash[:errors].each do |error| %>
+    <div class='error'><p class='warning'><%= error %></p></div>
+  <% end %>
+<% end %>
+
 <div class="box">
 
 	<%= form_for(:user, url: {controller: 'user', action: 'create'}) do |f| %>
@@ -15,6 +21,8 @@
   <% end %>
 
 </div>
+
+<div class='space'></div>
 
 <div class="box">
 
