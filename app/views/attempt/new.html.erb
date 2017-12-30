@@ -39,12 +39,10 @@
 	navigator.getUserMedia  = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
 
 	if (navigator.getUserMedia) {
-	  navigator.getUserMedia({audio: true, video: true}, function(stream) {
+	  navigator.getUserMedia({audio: false, video: true}, function(stream) {
 	    video.src = window.URL.createObjectURL(stream);
 
 	    var mediaRecorder = new MediaRecorder(stream);
-
-	    // visualize(stream);
 
 	    record.onclick = function() {
 	      mediaRecorder.start();
@@ -58,7 +56,7 @@
 
 	    mediaRecorder.onstop = function(e) {
 
-	      blob = new Blob(chunks, { 'type' : 'video/webm; codecs=opus' });
+	      blob = new Blob(chunks, { 'type' : 'video/mp4; codecs=H.264' });
 	      chunks = [];
 
 	      video.src = URL.createObjectURL(blob);

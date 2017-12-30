@@ -30,7 +30,7 @@
 		<% end %>
 		<button id='<%= attempt.id %>' onclick='toggleVideo(this.id)'>Show Video</button>
 
-		<div id='videoContainer<%= attempt.id %>' style='display: none'></div>
+		<video class='videoContainer' id='videoContainer<%= attempt.id %>' style='display: none' controls></video>
 	</div>
 	<div class='space'></div>
 <% end %>
@@ -46,7 +46,7 @@
 		      type: "GET", 
 		      url: '/video/' + id,
 		      success: function(data) {
-		      	videoContainer.innerHTML = '<video src=\'' + data.video + '\'controls>';
+		      	videoContainer.innerHTML = '<source src=\'' + data.video + '\' type=\'video/mp4\'>';
 		      }
 		    });
 			}
