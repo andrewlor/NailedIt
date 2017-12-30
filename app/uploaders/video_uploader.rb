@@ -3,7 +3,7 @@ class VideoUploader
 	# returns s3 object key or location of video
 	def self.store_video(file_contents)
 		if file_contents.empty?; return nil end
-		obj_key = "videos/#{SecureRandom.urlsafe_base64}.mp4"
+		obj_key = "videos/#{SecureRandom.urlsafe_base64}.webm"
 		
 		temp_location = Rails.root.join('tmp', obj_key)
 
