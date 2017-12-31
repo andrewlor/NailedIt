@@ -3,7 +3,7 @@ class VideoUploader
 	# returns s3 object key or location of video
 	def self.store_video(file_contents)
 		if file_contents.empty?; return nil end
-		obj_key = "videos/#{SecureRandom.urlsafe_base64}.webm"
+		obj_key = "videos/#{SecureRandom.urlsafe_base64}.mp4"
 		
 		temp_location = Rails.root.join('tmp', obj_key)
 
@@ -18,10 +18,10 @@ class VideoUploader
 		file.close
 
 		# upload to s3
-		if Rails.env.production?
+		if ENV['UPLOAD_TO_S3'].present?
 			s3 = Aws::S3::Resource.new(region: ENV['AWS_REGION'])
 			obj = s3.bucket(ENV['S3_BUCKET_NAME']).object(obj_key)
-			obj.upload_file(temp_location)
+			obj.upload_file(temp_location, :content_type => 'video/mp4; codecs="avc1.42E01E"')
 			FileUtils.rm(temp_location)
 		end
 
@@ -31,19 +31,14 @@ class VideoUploader
 	# side effects: none
 	# returns video string
 	def self.read_video(obj_key)
-		temp_location = Rails.root.join('tmp', obj_key)
-
-		if Rails.env.production?
-			File.open(temp_location, 'wb') do |file|
-				s3 = Aws::S3::Client.new
-	  		s3.get_object({ bucket: ENV['S3_BUCKET_NAME'], key: obj_key }, target: file)
-			end
+		if ENV['UPLOAD_TO_S3'].present?
+			return "https://s3-us-west-2.amazonaws.com/nailedit/#{obj_key}"
 		end
+
+		temp_location = Rails.root.join('tmp', obj_key)
 
 		file = File.open(temp_location, 'r')
 		video_string = file.read
-
-		if Rails.env.production?; FileUtils.rm(temp_location) end
 
 		return video_string
 	end
