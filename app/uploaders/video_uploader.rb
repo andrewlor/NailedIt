@@ -1,4 +1,6 @@
 class VideoUploader
+	require 'streamio-ffmpeg'
+
 	# side effects: uploads video file to s3 or stores in tmp/videos
 	# returns s3 object key or location of video
 	def self.store_video(file_contents)
@@ -21,7 +23,7 @@ class VideoUploader
 		if ENV['UPLOAD_TO_S3'].present?
 			s3 = Aws::S3::Resource.new(region: ENV['AWS_REGION'])
 			obj = s3.bucket(ENV['S3_BUCKET_NAME']).object(obj_key)
-			obj.upload_file(temp_location, :content_type => 'video/mp4; codecs="avc1.42E01E"')
+			obj.upload_file(temp_location, content_type: 'video/mp4')
 			FileUtils.rm(temp_location)
 		end
 
