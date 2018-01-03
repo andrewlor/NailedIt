@@ -1,7 +1,9 @@
-$header-font: 'Bungee', cursive;
-$text-font: 'Montserrat', sans-serif;
+$header-font: 'Bungee', verdana;
+$text-font: 'Montserrat', verdana;
 $primary-color: #ff7e00;
 $back-color: #eaeaea;
+$space-size: 50px;
+$space-size-mobile: 75px;
 
 /* Positional Classes to inherit from */
 
@@ -24,14 +26,12 @@ body {
 }
 
 h1, h2, h3, h4 {
- 	font-family: arial; /* Fall back font */
 	font-weight: bold;
 	font-family: $header-font;
 	color: #ff7e00;
 }
 
 p {
-	font-family: arial; /* Fall back font */
 	font-family: $text-font;
 	color: #ff7e00;
 }
@@ -117,7 +117,7 @@ video {
 }
 
 .space {
-	height: 50px;
+	height: $space-size;
 }
 
 .warning {
@@ -163,6 +163,10 @@ video {
 	right: 25px;
 }
 
+#editBox {
+	display: none;
+}
+
 /* Mobile Optimize */
 
 @media screen and (max-width: 1000px) {
@@ -198,6 +202,6 @@ video {
   }
 
   .space {
-  	height: 75px;
+  	height: $space-size-mobile;
   }
 }

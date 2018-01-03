@@ -6,19 +6,25 @@
 
 <div class='box'>
 	<h1>Attempting: <%= @record.title %></h1>
+
+	<video muted autoplay id='video'></video>
+	<button id='record'>Record</button>
+	<button id='stop'>Stop</button>
+
+	<div id='editBox'>
+		<button id='startTimer'>Start Timestamp</button>
+		<button id='stopTimer'>Stop Timestamp</button>
+		<h1 id='time'>0:0:0</h1>
+	</div>
+	
+
 	<%= form_tag('/attempt', method: 'post') do %>
 		<input type='hidden' name='record_id' value='<%= @record.id %>'>
-	  <video muted autoplay id='video'></video>
 	  <input type='hidden' name='video_string' id='videoString'>
-	  <input type='button' value='Record' id='record'>
-		<input type='button' value='Stop' id='stop'>
-		<input type='button' value='Reset' id='reset' style='visibility: hidden'>
-		<br/>
-
+		<input type='button' value='Reset' id='reset' style='visibility: hidden;'/>
+		<br>
 		<input type='submit' id='submit'/>
 	<% end %>
-
-	<div class='clip'></div>
 </div>
 
 <script>
@@ -32,6 +38,11 @@
   let reset = document.getElementById('reset');
   let videoString = document.getElementById('videoString');
   let submit = document.getElementById('submit');
+  let startTimer = document.getElementById('startTimer');
+  let time = document.getElementById('time');
+  let editBox = document.getElementById('editBox');
+  let timeObj = [0, 0, 0];
+  let timerIntervalId;
   var blob;
 
   let chunks = [];
@@ -47,12 +58,31 @@
 	    record.onclick = function() {
 	      mediaRecorder.start();
 	      record.style.background = "red";
-	    }
+	    };
 
 	    stop.onclick = function() {
 	      mediaRecorder.stop();
 	      record.style.background = "";
-	    }
+	    };
+
+	    startTimer.onclick = function () {
+				timerIntervalId = setInterval(function() {
+					++timeObj[0];
+					if (timeObj[0] == 10) {
+						timeObj[0] = 0;
+						++timeObj[1];
+						if (timeObj[1] == 60) {
+							timeObj[1] = 0;
+							++timeObj[2];
+						}
+					}
+					time.innerHTML = timeObj[2] + ':' + timeObj[1] + ':' + timeObj[0];
+				}, 100);
+	    };
+
+	    stopTimer.onclick = function() {
+	    	clearInterval(timerIntervalId);
+	    };
 
 	    mediaRecorder.onstop = function(e) {
 
@@ -61,6 +91,7 @@
 
 	      video.src = URL.createObjectURL(blob);
 	      video.controls = true;
+	      editBox.style.display = 'block';
 	      reset.style.visibility = 'visible';
 
 	      var reader = new FileReader();
@@ -74,14 +105,15 @@
 	      reset.onclick = function () {
 	      	videoString.value = '';
 	      	video.src = window.URL.createObjectURL(stream);
+	      	editBox.style.display = 'none';
 	      	reset.style.visibility = 'hidden';
 	      	video.controls = false;
-	      }
+	      };
 	    }
 
 	    mediaRecorder.ondataavailable = function(e) {
 	      chunks.push(e.data);
-	    }
+	    };
 
 	  }, errorCallback);
 	} else {

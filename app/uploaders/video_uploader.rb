@@ -1,5 +1,4 @@
 class VideoUploader
-	require 'streamio-ffmpeg'
 
 	# side effects: uploads video file to s3 or stores in tmp/videos
 	# returns s3 object key or location of video
