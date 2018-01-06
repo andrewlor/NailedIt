@@ -14,9 +14,7 @@ class VideoUploader
 			FileUtils.mkdir(dir_location)
 		end
 
-		file = File.new(temp_location, 'w')
-		file.puts(file_contents)
-		file.close
+		File.binwrite(temp_location, file_contents.encode(Encoding::ASCII_8BIT))
 
 		# upload to s3
 		if ENV['UPLOAD_TO_S3'].present?
@@ -34,13 +32,8 @@ class VideoUploader
 	def self.read_video(obj_key)
 		if ENV['UPLOAD_TO_S3'].present?
 			return "https://s3-us-west-2.amazonaws.com/nailedit/#{obj_key}"
+		else
+			return "file:/" + Rails.root.join('tmp', obj_key).to_s
 		end
-
-		temp_location = Rails.root.join('tmp', obj_key)
-
-		file = File.open(temp_location, 'r')
-		video_string = file.read
-
-		return video_string
 	end
 end

@@ -60,16 +60,17 @@
 	      chunks = [];
 
 	      video.src = URL.createObjectURL(blob);
+	      videoString.value = video.src;
 	      video.controls = true;
 	      reset.style.visibility = 'visible';
 
-	      var reader = new FileReader();
+	   //    var reader = new FileReader();
 
-	      reader.onload = function(event){
-	      	videoString.value = event.target.result;
-				};
+	   //    reader.onload = function(event){
+	   //    	videoString.value = event.target.result;
+				// };
 
-	      reader.readAsDataURL(blob);
+	   //    reader.readAsText(blob, 'ISO-8859-1');
 
 	      reset.onclick = function () {
 	      	videoString.value = '';
