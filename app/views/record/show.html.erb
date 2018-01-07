@@ -30,7 +30,7 @@
 		<% end %>
 		<button id='<%= attempt.id %>' onclick='toggleVideo(this.id)'>Show Video</button>
 
-		<video playsinline class='videoContainer' id='videoContainer<%= attempt.id %>' style='display: none' controls></video>
+		<video playsinline preload class='videoContainer' id='videoContainer<%= attempt.id %>' style='display: none' controls></video>
 	</div>
 	<div class='space'></div>
 <% end %>
@@ -46,7 +46,7 @@
 		      type: "GET", 
 		      url: '/video/' + id,
 		      success: function(data) {
-		      	videoContainer.innerHTML = '<source src=\'' + data.video + '\'>';
+		      	videoContainer.innerHTML = '<source type=\'video/mp4\' src=\'' + data.video + '\'>';
 		      }
 		    });
 			} videoContainer.style.display = 'block';
