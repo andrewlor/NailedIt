@@ -46,7 +46,7 @@
 		      type: "GET", 
 		      url: '/video/' + id,
 		      success: function(data) {
-		      	videoContainer.innerHTML = '<source type=\'video/H264\' src=\'' + data.video + '\'>';
+		      	videoContainer.innerHTML = '<source type=\'video/mp4\' src=\'' + data.video + '\'>';
 		      }
 		    });
 			} videoContainer.style.display = 'block';

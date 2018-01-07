@@ -54,9 +54,11 @@
 
 	    mediaRecorder.onstop = function(e) {
 
-	      // blob = new Blob(chunks, { 'type' : 'video/mp4; codecs=avc1.42E01E' });
-	      blob = new Blob(chunks, { 'type' : 'video/H264' });
+	      blob = new Blob(chunks, { 'type' : 'video/mp4; codecs=avc1.64001E', 'endings': 'native' });
+	      // blob = new Blob(chunks, { 'type' : 'video/mp4; codecs=H264' });
 	      chunks = [];
+
+	      console.log(blob.type)
 
 	      video.src = URL.createObjectURL(blob);
 	      video.controls = true;
