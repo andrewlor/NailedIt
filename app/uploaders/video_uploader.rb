@@ -2,8 +2,8 @@ class VideoUploader
 
 	# side effects: uploads video file to s3 or stores in tmp/videos
 	# returns s3 object key or location of video
-	def self.store_video(file_contents)
-		if file_contents.empty?; return nil end
+	def self.store_video(file)
+		if !file; return nil end
 		obj_key = "videos/#{SecureRandom.urlsafe_base64}.mp4"
 		
 		temp_location = Rails.root.join('tmp', obj_key)
@@ -14,7 +14,8 @@ class VideoUploader
 			FileUtils.mkdir(dir_location)
 		end
 
-		File.binwrite(temp_location, file_contents.encode(Encoding::ASCII_8BIT))
+		temp_string = file.read.encode(Encoding::ASCII_8BIT)
+		File.binwrite(temp_location, temp_string)
 
 		# upload to s3
 		if ENV['UPLOAD_TO_S3'].present?
@@ -33,7 +34,7 @@ class VideoUploader
 		if ENV['UPLOAD_TO_S3'].present?
 			return "https://s3-us-west-2.amazonaws.com/nailedit/#{obj_key}"
 		else
-			return "file:/" + Rails.root.join('tmp', obj_key).to_s
+			return ENV['LOCAL_ASSEST_SERVER'] + obj_key
 		end
 	end
 end

@@ -6,17 +6,15 @@
 
 <div class='box'>
 	<h1>Attempting: <%= @record.title %></h1>
-	<%= form_tag('/attempt', method: 'post') do %>
-		<input type='hidden' name='record_id' value='<%= @record.id %>'>
-	  <video muted autoplay id='video'></video>
-	  <input type='hidden' name='video_string' id='videoString'>
-	  <input type='button' value='Record' id='record'>
-		<input type='button' value='Stop' id='stop'>
-		<input type='button' value='Reset' id='reset' style='visibility: hidden'>
-		<br/>
+	<input type='hidden' name='record_id' value='<%= @record.id %>'/>
+	<input type='hidden' name='video_string' id='videoString'/>
+  <video muted autoplay id='video'></video>
+  <input type='button' value='Record' id='record'>
+	<input type='button' value='Stop' id='stop'>
+	<input type='button' value='Reset' id='reset' style='visibility: hidden'>
+	<br/>
 
-		<input type='submit' id='submit'/>
-	<% end %>
+	<input type='submit' id='submit'/>
 
 	<div class='clip'></div>
 </div>
@@ -30,8 +28,8 @@
   let record = document.getElementById('record');
   let stop = document.getElementById('stop');
   let reset = document.getElementById('reset');
-  let videoString = document.getElementById('videoString');
   let submit = document.getElementById('submit');
+  let videoString = document.getElementById('videoString');
   var blob;
 
   let chunks = [];
@@ -60,17 +58,8 @@
 	      chunks = [];
 
 	      video.src = URL.createObjectURL(blob);
-	      videoString.value = video.src;
 	      video.controls = true;
 	      reset.style.visibility = 'visible';
-
-	   //    var reader = new FileReader();
-
-	   //    reader.onload = function(event){
-	   //    	videoString.value = event.target.result;
-				// };
-
-	   //    reader.readAsText(blob, 'ISO-8859-1');
 
 	      reset.onclick = function () {
 	      	videoString.value = '';
@@ -78,6 +67,26 @@
 	      	reset.style.visibility = 'hidden';
 	      	video.controls = false;
 	      }
+	    }
+
+	    submit.onclick = function () {
+	    	let fd = new FormData();
+	    	fd.append('file', blob);
+	    	fd.append('record_id', Number('<%= @record.id %>'));
+
+	    	$.ajax({
+		      type: 'POST', 
+		      url: '/attempt',
+		      data: fd,
+					processData: false,
+					contentType: false,
+		      success: function(data) {
+		      	window.location.href = '/record/<%= @record.id %>'
+		      },
+		      error: function(data) {
+		      	window.location.reload();
+		      },
+		    });
 	    }
 
 	    mediaRecorder.ondataavailable = function(e) {
