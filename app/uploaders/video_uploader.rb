@@ -21,7 +21,7 @@ class VideoUploader
 		if ENV['UPLOAD_TO_S3'].present?
 			s3 = Aws::S3::Resource.new(region: ENV['AWS_REGION'])
 			obj = s3.bucket(ENV['S3_BUCKET_NAME']).object(obj_key)
-			obj.upload_file(temp_location, content_type: 'video/mp4')
+			obj.upload_file(temp_location, content_type: 'video/H264')
 			FileUtils.rm(temp_location)
 		end
 
