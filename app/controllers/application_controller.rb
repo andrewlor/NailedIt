@@ -9,6 +9,12 @@ class ApplicationController < ActionController::Base
   	end
   end
 
+  def check_logged_in
+    if session[:user_id]
+      @current_user = User.find(session[:user_id])
+    end
+  end
+
   def logout
   	session[:user_id] = nil
   	redirect_to '/signup'

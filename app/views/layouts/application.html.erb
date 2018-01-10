@@ -20,8 +20,14 @@
         <h4 id='current_user'>Hi, <%= @current_user.username %></h4>
       <% end %>
       <% if !current_page?('/signup')%>
-        <%= form_tag('/logout' , method: 'post', id: 'logout_button') do%>
-          <%= submit_tag("logout") %>
+        <% if @current_user %>
+          <%= form_tag('/logout' , method: 'post', id: 'logout_button') do%>
+            <%= submit_tag("logout") %>
+          <% end %>
+        <% else %>
+          <%= form_tag('/signup' , method: 'get', id: 'logout_button') do%>
+            <%= submit_tag("signup") %>
+          <% end %>
         <% end %>
       <% end %>
   	</div>

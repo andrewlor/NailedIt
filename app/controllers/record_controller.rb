@@ -1,5 +1,6 @@
 class RecordController < ApplicationController
-	before_action :current_user
+	before_action :current_user, except: [:show, :index]
+	before_action :check_logged_in, except: [:new, :create]
 
 	def index
 		@records = Record.where(init_attempt: true).reverse_order
