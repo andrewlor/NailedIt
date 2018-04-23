@@ -165,6 +165,20 @@ video {
 
 #editBox {
 	display: none;
+	position: absolute;
+	left: calc(100% + 20px);
+	padding: 5px;
+	background-color: white;
+}
+
+#editBox #stopTimer {
+	background-color: grey;
+}
+
+#editInstructions {
+	display: none;
+	position: relative;
+	right: 0;
 }
 
 /* Mobile Optimize */

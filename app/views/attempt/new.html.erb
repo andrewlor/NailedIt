@@ -7,21 +7,23 @@
 <div class='box'>
 	<h1>Attempting: <%= @record.title %></h1>
 
-	<video muted autoplay id='video'></video>
-	<button id='record'>Record</button>
-	<button id='stop'>Stop</button>
-
 	<div id='editBox'>
+		<div id='editInstructions'><p>Instructions: While the video is paused, srub to where you want the timer to begin. Then press Start Timestamp. The video and timestamp will begin played. Simply press Stop timestamp when you want it to stop.</p></div>
 		<button id='startTimer'>Start Timestamp</button>
 		<button id='stopTimer'>Stop Timestamp</button>
 		<h1 id='time'>0:0:0</h1>
 	</div>
-	
+
+	<video muted id='video'></video>
+	<button id='record'>Record</button>
+	<button id='stop'>Stop</button>
 
 	<%= form_tag('/attempt', method: 'post') do %>
 		<input type='hidden' name='record_id' value='<%= @record.id %>'>
 	  <input type='hidden' name='video_string' id='videoString'>
 		<input type='button' value='Reset' id='reset' style='visibility: hidden;'/>
+		<input type='hidden' name='timer_start' id='timer_start_value'/>
+		<input type='hidden' name='timer_end' id='timer_end_value'/>
 		<br>
 		<input type='submit' id='submit'/>
 	<% end %>
@@ -32,20 +34,24 @@
     console.log('Rejected!', e);
   };
 
-	let video = document.getElementById('video');
-  let record = document.getElementById('record');
+  let currentlyTiming = false
+  let timerStartValue = document.getElementById('timer_start_value');
+  let timerEndValue = document.getElementById('timer_end_value');
   let stop = document.getElementById('stop');
-  let reset = document.getElementById('reset');
-  let videoString = document.getElementById('videoString');
-  let submit = document.getElementById('submit');
-  let startTimer = document.getElementById('startTimer');
-  let time = document.getElementById('time');
-  let editBox = document.getElementById('editBox');
   let timeObj = [0, 0, 0];
   let timerIntervalId;
   var blob;
-
   let chunks = [];
+
+  video.onplay = () => {
+		startTimer.style.backgroundColor = 'grey'
+		stopTimer.style.backgroundColor = 'grey'
+	}
+
+	video.onpause = () => {
+		startTimer.style.backgroundColor = 'orange'
+		stopTimer.style.backgroundColor = 'orange'
+	}
 
 	navigator.getUserMedia  = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
 
@@ -66,23 +72,37 @@
 	    };
 
 	    startTimer.onclick = function () {
-				timerIntervalId = setInterval(function() {
-					++timeObj[0];
-					if (timeObj[0] == 10) {
-						timeObj[0] = 0;
-						++timeObj[1];
-						if (timeObj[1] == 60) {
-							timeObj[1] = 0;
-							++timeObj[2];
+	    	if (video.paused) {
+	    		currentlyTiming = true
+	    		video.play()
+	    		timerStartValue.value = video.currentTime
+					timerIntervalId = setInterval(function() {
+						++timeObj[0];
+						if (timeObj[0] == 10) {
+							timeObj[0] = 0;
+							++timeObj[1];
+							if (timeObj[1] == 60) {
+								timeObj[1] = 0;
+								++timeObj[2];
+							}
 						}
-					}
-					time.innerHTML = timeObj[2] + ':' + timeObj[1] + ':' + timeObj[0];
-				}, 100);
+						time.innerHTML = timeObj[2] + ':' + timeObj[1] + ':' + timeObj[0];
+					}, 100);
+	    	}
 	    };
 
-	    stopTimer.onclick = function() {
-	    	clearInterval(timerIntervalId);
+	    let stopTimerFn = function() {
+	    	if (currentlyTiming) {
+	    		currentlyTiming = false
+		    	timerEndValue.value = video.currentTime
+		    	video.pause()
+		    	stopTimerFn();
+	    		clearInterval(timerIntervalId);
+	    	}
 	    };
+
+	    video.onended = stopTimerFn
+	    stopTimer.onclick = stopTimerFn
 
 	    mediaRecorder.onstop = function(e) {
 
